@@ -1,0 +1,27 @@
+<div id="hf-summary-page"
+     class="mdc-layout-grid">
+
+    <mdc-headline class="mb-0">Account</mdc-headline>
+    <mdc-body class="m-0">{{ whoami.agent_address }}</mdc-body>
+    <mdc-display class="mt-0">
+	<img src="/images/holo/holo-logo.png" style="height: .5em; vertical-align: middle;" />
+	{{ ledger.balance }}
+    </mdc-display>
+    
+    <mdc-tab-bar @change="selectTab">
+	<mdc-tab icon="swap_horiz">Transactions</mdc-tab>
+	<mdc-tab icon="toc">Details</mdc-tab>
+    </mdc-tab-bar>
+
+    <section v-if="selectedTab === 0">
+    </section>
+    
+    <section v-if="selectedTab === 1">
+	<mdc-display>Typography</mdc-display>
+	<mdc-headline>Headline</mdc-headline>
+	<mdc-title>Title <mdc-caption>Caption</mdc-caption></mdc-title>
+	<mdc-subheading>Subheading</mdc-subheading>
+	<mdc-body>Body</mdc-body>
+    </section>
+
+</div>

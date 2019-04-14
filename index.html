@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+    <head>
+	<title>HoloFuel</title>
+
+
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" type="text/css">
+	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+
+	<link rel="stylesheet" href="/css/bootstrap-spacing.min.css">
+
+	<script src="/vuejs/2.5.22/vue.js"></script>
+	<script src="https://unpkg.com/vue-mdc-adapter"></script>
+	<script src="/vuejs/router/3.0.2/vue-router.js"></script>
+	
+	<!-- https://material.io/tools/color/#!/?view.left=0&amp;view.right=0&view.right=0&primary.color=01579B&secondary.color=00a9f4&primary.text.color=ffffff&secondary.text.color=002f6c -->
+	<style type="text/css" rel="stylesheet">
+	  body { margin: 0; }
+
+	  :root {
+	    --mdc-theme-primary: #01579b;
+	    --mdc-theme-secondary: #00a9f4;
+	    --mdc-theme-on-primary: #fff;
+	    --mdc-theme-on-secondary: #002f6c;
+	  }
+	</style>
+
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	
+    </head>
+    <body>
+
+	<div id="app">
+	    <header class="mdc-toolbar">
+		<div class="mdc-toolbar__row">
+		    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			<a href="#" class="material-icons mdc-toolbar__menu-icon">menu</a>
+		    </section>
+		    <section class="mdc-toolbar__section">
+			<span class="mdc-toolbar__title">HoloFuel</span>
+		    </section>
+		    <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+		    </section>
+		</div>
+	    </header>
+	    
+	    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+	    <!-- 	<a class="navbar-brand" -->
+	    <!-- 	   href="#"><small>P&amp;G / Asset Discovery /</small> Administration</a> -->
+		
+	    <!-- 	<button class="navbar-toggler" -->
+	    <!-- 		type="button" -->
+	    <!-- 		data-toggle="collapse" -->
+	    <!-- 		data-target="#navbarSupportedContent" -->
+	    <!-- 		aria-controls="navbarSupportedContent" -->
+	    <!-- 		aria-expanded="false" -->
+	    <!-- 		aria-label="Toggle navigation"> -->
+	    <!-- 	    <span class="navbar-toggler-icon"></span> -->
+	    <!-- 	</button> -->
+		
+	    <!-- 	<div class="collapse navbar-collapse" -->
+	    <!-- 	     id="navbarSupportedContent"> -->
+	    <!-- 	    <ul class="navbar-nav mr-auto"> -->
+	    <!-- 		<li class="nav-item"> -->
+	    <!-- 		    <router-link class="nav-link" -->
+	    <!-- 				 to="/">Home</router-link> -->
+	    <!-- 		</li> -->
+	    <!-- 		<li class="nav-item"> -->
+	    <!-- 		    <router-link class="nav-link" -->
+	    <!-- 				 to="/reparse">Reparse Data</router-link> -->
+	    <!-- 		</li> -->
+	    <!-- 	    </ul> -->
+	    <!-- 	    <form class="form-inline my-2 my-lg-0"> -->
+	    <!-- 		<input class="form-control mr-sm-2" -->
+	    <!-- 		       type="search" -->
+	    <!-- 		       placeholder="Search" -->
+	    <!-- 		       aria-label="Search"> -->
+	    <!-- 		<button class="btn btn-outline-success my-2 my-sm-0" -->
+	    <!-- 			type="submit">Search</button> -->
+	    <!-- 	    </form> -->
+	    <!-- 	</div> -->
+	    <!-- </nav> -->
+	    
+	    <!-- <div v-if="dbInfo" class="alert alert-warning" role="alert"> -->
+	    <!-- 	<b>Current DB Connection: ({{ dbInfo.db_type }})</b> -->
+	    <!-- 	<i>{{ dbInfo.db_hostname }}.[{{ dbInfo.db_name }}]</i> -->
+	    <!-- 	<b>via user</b> -->
+	    <!-- 	{{ dbInfo.user_hostname }}.[{{ dbInfo.user_name }}] -->
+	    <!-- </div> -->
+	    
+	    <router-view></router-view>
+	</div>
+
+	<script src="/axios/0.18.0/axios.min.js"></script>
+	<script type="text/javascript">
+    	  Vue.prototype.$http = axios;
+	</script>
+	
+	<!-- <script src="/js/app.js"></script> -->
+	<script src="/build/webpacked.app.js"></script>
+    </body>
+</html>
