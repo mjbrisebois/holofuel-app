@@ -23,6 +23,10 @@
 	<style type="text/css" rel="stylesheet">
 	  body { margin: 0; font-family: Roboto,sans-serif; }
 
+	  [v-cloak] {
+	    display: none;
+	  }
+
 	  :root {
 	    --mdc-theme-primary: #01579b;
 	    --mdc-theme-secondary: #00a9f4;
@@ -40,7 +44,9 @@
 		<!-- <mdc-top-app-bar-action @click="showHelp" icon="help"></mdc-top-app-bar-action> -->
 	    </mdc-top-app-bar>
 
-	    <mdc-drawer toggle-on="nav" temporary>
+	    <mdc-drawer v-cloak
+			v-if="whoami.agent_id"
+			toggle-on="nav" temporary>
 		<div class="px-3">
 		    <mdc-title class="mb-0">HoloFuel</mdc-title>
 		    <mdc-subheading class="mt-1">{{ whoami.agent_id.nick }}</mdc-subheading>
@@ -48,13 +54,13 @@
 		
 	    	<mdc-drawer-list>
 		    <mdc-drawer-item start-icon="dashboard"
-				     href="/#/">Dashboard</mdc-drawer-item>
+				     :href="relative('/')">Dashboard</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="person"
-				     href="/#/profile">Profile</mdc-drawer-item>
+				     :href="relative('/profile')">Profile</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="call_made"
-				     href="/#/promise">Send funds</mdc-drawer-item>
+				     :href="relative('/promise')">Send funds</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="call_received"
-				     href="/#/request">Request funds</mdc-drawer-item>
+				     :href="relative('/request')">Request funds</mdc-drawer-item>
 	    	</mdc-drawer-list>
 	    </mdc-drawer>
 	    

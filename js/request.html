@@ -8,16 +8,10 @@
 		       helptext="Copy to clipboard"
 		       trailing-icon="file_copy"
 		       @icon-action="$root.copyToClipboard( whoami.agent_address )" />
-	<mdc-display class="my-0">
-	    <hf-symbol />{{ ledger.balance }}<br>
-	</mdc-display>
-	<mdc-subheading class="mt-0">
-	    Available <hf-symbol />{{ ledger.available }}
-	</mdc-subheading>
     </div>
 
     <div class="px-3">
-	<mdc-title>Send funds</mdc-title>
+	<mdc-title>Request funds</mdc-title>
 	
 	<mdc-textfield v-model="receiver_id" required fullwidth label="Send to HoloFuel ID" />
 	<mdc-textfield v-model="amount" required fullwidth label="Amount" />
