@@ -1,7 +1,7 @@
 <div id="hf-summary-page">
 
     <div class="p-2">
-	<mdc-headline class="mb-0">Account</mdc-headline>
+	<mdc-headline class="mb-0">{{ whoami.agent_id && whoami.agent_id.nick || "Account" }}</mdc-headline>
 	<mdc-textfield v-model="whoami.agent_address"
 		       readonly fullwidth dense
 		       label="HoloFuel ID"
