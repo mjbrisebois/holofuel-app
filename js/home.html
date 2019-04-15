@@ -11,13 +11,6 @@
 	<mdc-display class="my-0">
 	    <hf-symbol />{{ ledger.available | currency }}<br>
 	</mdc-display>
-	<mdc-subheading class="mt-0">
-	  <hf-symbol />{{ ledger.credit | currency }} Credit
-	  + <hf-symbol />{{ ledger.balance | currency }} Balance
-	  - <hf-symbol />{{ ledger.payable | currency }} Payable
-	  <br/>
-	  (<hf-symbol />{{ ledger.fees | currency }} Fees Due)
-	</mdc-subheading>
     </div>
     
     <mdc-tab-bar @change="selectTab">
@@ -42,12 +35,13 @@
 		    <td style="width: 60%">
 			<mdc-body>
 			    <b>{{ datetime( tx.event[1], 'long' ) }}</b><br>
-			    {{ tx.event[2].Request.to }}
+			    {{ tx.event[2].Request.to }}<br>
+			    {{ tx.event[2].Request.notes }}
 			</mdc-body>
 
 			<div class="flex-table">
 			    <div>
-				<mdc-button dense raised @click="dialog_request_confirm( tx )">Approve</mdc-button>
+				<mdc-button dense raised @click="dialog_request_confirm( tx )">Send</mdc-button>
 			    </div>				
 			    <div style="text-align: right;">
 				<mdc-button dense outlined @click="dialog_request_decline( tx )">Decline</mdc-button>
@@ -57,8 +51,8 @@
 		    <td style="width: 20%; text-align: right;"></td>
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body style="color: #C00;">
-			    <hf-symbol />{{ pending_request_total( tx ) | currency }}
-			    <br/>
+			    <hf-symbol />{{ pending_request_amount( tx ) | currency }}
+			    <br>
 			    <small>Fee {{ pending_request_fees( tx ) | currency }}</small>
 			</mdc-body>
 		    </td>
@@ -67,7 +61,8 @@
 		    <td style="width: 60%">
 			<mdc-body>
 			    <b>{{ datetime( tx.event[1], 'long' ) }}</b><br>
-			    {{ tx.event[2].Promise.tx.from }}
+			    {{ tx.event[2].Promise.tx.from }}<br>
+			    {{ tx.event[2].Promise.tx.notes }}
 			</mdc-body>
 
 			<div class="flex-table">
@@ -81,8 +76,7 @@
 		    </td>
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body style="color: #0C0;">
-			    <hf-symbol />{{ pending_promise_total( tx ) | currency }}<br>
-			    <small>{{ tx.event[2].Promise.tx.amount | currency }}</small>
+			    <hf-symbol />{{ pending_promise_amount( tx ) | currency }}
 			</mdc-body>
 		    </td>
 		    <td style="width: 20%; text-align: right;"></td>
@@ -125,14 +119,6 @@
 	    <tbody>
 		<tr>
 		    <td style="width: 50%">
-			<mdc-subheading>Balance</mdc-subheading>
-		    </td>
-		    <td style="width: 50%; text-align: right;">
-			<mdc-text><hf-symbol />{{ ledger.balance | currency }}</mdc-text>
-		    </td>
-		</tr>
-		<tr>
-		    <td style="width: 50%">
 			<mdc-subheading>Available</mdc-subheading>
 		    </td>
 		    <td style="width: 50%; text-align: right;">
@@ -149,10 +135,10 @@
 		</tr>
 		<tr>
 		    <td style="width: 50%">
-			<mdc-subheading>Fees</mdc-subheading>
+			<mdc-subheading>Balance</mdc-subheading>
 		    </td>
 		    <td style="width: 50%; text-align: right;">
-			<mdc-text><hf-symbol />{{ ledger.fees | currency }}</mdc-text>
+			<mdc-text><hf-symbol />{{ ledger.balance | currency }}</mdc-text>
 		    </td>
 		</tr>
 		<tr>
@@ -165,10 +151,18 @@
 		</tr>
 		<tr>
 		    <td style="width: 50%">
+			<mdc-subheading>Fees Due</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.fees | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
 			<mdc-subheading>Receivable</mdc-subheading>
 		    </td>
 		    <td style="width: 50%; text-align: right;">
-			<mdc-text><hf-symbol />{{ ledger.receivable }}</mdc-text>
+			<mdc-text><hf-symbol />{{ ledger.receivable | currency }}</mdc-text>
 		    </td>
 		</tr>
 	    </tbody>

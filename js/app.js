@@ -188,13 +188,16 @@ Vue.filter('currency', function (value) {
 			return `${tx.state}?`;
 		    }
 		},
+		pending_request_amount: function ( tx ) {
+		    return parseFloat( tx.event[2].Request.amount );
+		},
 		pending_request_total: function ( tx ) {
 		    return parseFloat( tx.event[2].Request.amount ) + parseFloat( tx.event[2].Request.fee );
 		},
 		pending_request_fees: function ( tx ) {
 		    return parseFloat( tx.event[2].Request.fee );
 		},
-		pending_promise_total: function ( tx ) {
+		pending_promise_amount: function ( tx ) {
 		    return parseFloat( tx.event[2].Promise.tx.amount );
 		},
 		dialog_request_confirm: function ( tx ) {
