@@ -19,7 +19,7 @@ start-agent-dna-%:
 	HC_AGENT=testAgent_$*								\
 	HC_N3H_BOOTSTRAP_NODE=$$P2P							\
 	HC_N3H_IPC_URI=$$IPC								\
-	hc run --logging --port 3100 | tee -a agent_$*.output
+	hc run --logging --port "$$(( 3099 + $* ))" | tee -a agent_$*.output
 
 kill-n3h:
 	kill $$( pgrep -f 'n3h' )
