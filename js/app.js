@@ -320,7 +320,7 @@ Vue.filter('currency', function (value) {
 	    "data": function() {
 		return {
 		    "confirm_request": false,
-		    "receiver_id": null,
+		    "spender_id": null,
 		    "amount": "0.00",
 		    "hours": "24",
 		    "notes": null,
@@ -350,7 +350,7 @@ Vue.filter('currency', function (value) {
 		    console.log( resp );
 		    notify.success("Funds have been requestd");
 
-		    this.receiver_id			= null;
+		    this.spender_id			= null;
 		    this.amount				= "0.00";
 		    this.notes				= null;
 		},

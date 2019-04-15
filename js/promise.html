@@ -9,10 +9,14 @@
 		       trailing-icon="file_copy"
 		       @icon-action="$root.copyToClipboard( whoami.agent_address )" />
 	<mdc-display class="my-0">
-	    <hf-symbol />{{ ledger.balance }}<br>
+	    <hf-symbol />{{ ledger.available | currency }}<br>
 	</mdc-display>
 	<mdc-subheading class="mt-0">
-	    Available <hf-symbol />{{ ledger.available }}
+	  <hf-symbol />{{ ledger.credit | currency }} Credit
+	  + <hf-symbol />{{ ledger.balance | currency }} Balance
+	  - <hf-symbol />{{ ledger.payable | currency }} Payable
+	  <br/>
+	  (<hf-symbol />{{ ledger.fees | currency }} Fees Due)
 	</mdc-subheading>
     </div>
 

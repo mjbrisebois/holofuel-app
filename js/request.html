@@ -8,24 +8,34 @@
 		       helptext="Copy to clipboard"
 		       trailing-icon="file_copy"
 		       @icon-action="$root.copyToClipboard( whoami.agent_address )" />
+	<mdc-display class="my-0">
+	    <hf-symbol />{{ ledger.available | currency }}<br>
+	</mdc-display>
+	<mdc-subheading class="mt-0">
+	  <hf-symbol />{{ ledger.credit | currency }} Credit
+	  + <hf-symbol />{{ ledger.balance | currency }} Balance
+	  - <hf-symbol />{{ ledger.payable | currency }} Payable
+	  <br/>
+	  (<hf-symbol />{{ ledger.fees | currency }} Fees Due)
+	</mdc-subheading>
     </div>
 
     <div class="px-3">
 	<mdc-title>Request funds</mdc-title>
 	
-	<mdc-textfield v-model="receiver_id" required fullwidth label="Send to HoloFuel ID" />
+	<mdc-textfield v-model="spender_id" required fullwidth label="Request from HoloFuel ID" />
 	<mdc-textfield v-model="amount" required fullwidth label="Amount" />
 	<mdc-textfield v-model="hours" required fullwidth label="Hours until expire" />
 	<mdc-textfield v-model="notes" fullwidth multiline rows="4" label="Notes" />
 	
-	<mdc-button raised @click="confirm_request=true">Send</mdc-button>
+	<mdc-button raised @click="confirm_request=true">Request</mdc-button>
     </div>
 
     <mdc-dialog v-model="confirm_request"
-		title="Confirm send"
+		title="Confirm request"
 		accept="Yes, request funds" cancel="Cancel"
-		@accept="send_request( receiver_id, amount, hours, notes )">
-	Are you sure you want to request <hf-symbol />{{ amount }} from {{ receiver_id }}?
+		@accept="send_request( spender_id, amount, hours, notes )">
+	Are you sure you want to request <hf-symbol />{{ amount }} from {{ spender_id }}?
     </mdc-dialog>
     
 </div>
