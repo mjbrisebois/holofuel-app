@@ -3,13 +3,17 @@
     <head>
 	<title>HoloFuel</title>
 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"> -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" type="text/css">
 	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+	<link rel="stylesheet" href="/node_modules/notyf/notyf.min.css">
 
 	<link rel="stylesheet" href="/css/bootstrap-spacing.min.css">
+	<link rel="stylesheet" href="/css/mdc-table.css">
+	<link rel="stylesheet" href="/css/custom.css">
 
 	<script src="/vuejs/2.5.22/vue.js"></script>
 	<script src="https://unpkg.com/vue-mdc-adapter"></script>
@@ -17,7 +21,7 @@
 	
 	<!-- https://material.io/tools/color/#!/?view.left=0&amp;view.right=0&view.right=0&primary.color=01579B&secondary.color=00a9f4&primary.text.color=ffffff&secondary.text.color=002f6c -->
 	<style type="text/css" rel="stylesheet">
-	  body { margin: 0; }
+	  body { margin: 0; font-family: Roboto,sans-serif; }
 
 	  :root {
 	    --mdc-theme-primary: #01579b;
@@ -31,20 +35,65 @@
 	
     </head>
     <body>
+	<mdc-layout-app id="app">
+	    <mdc-top-app-bar title="HoloFuel" event="nav">
+		<!-- <mdc-top-app-bar-action @click="showHelp" icon="help"></mdc-top-app-bar-action> -->
+	    </mdc-top-app-bar>
 
-	<div id="app">
-	    <header class="mdc-toolbar">
-		<div class="mdc-toolbar__row">
-		    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-			<a href="#" class="material-icons mdc-toolbar__menu-icon">menu</a>
-		    </section>
-		    <section class="mdc-toolbar__section">
-			<span class="mdc-toolbar__title">HoloFuel</span>
-		    </section>
-		    <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-		    </section>
+	    <mdc-drawer toggle-on="nav" temporary>
+		<div class="px-3">
+		    <mdc-title class="mb-0">HoloFuel</mdc-title>
+		    <mdc-subheading class="mt-1">{{ whoami.agent_id.nick }}</mdc-subheading>
 		</div>
-	    </header>
+		
+	    	<mdc-drawer-list>
+		    <mdc-drawer-item start-icon="dashboard"
+				     href="/#/">Dashboard</mdc-drawer-item>
+		    <mdc-drawer-item start-icon="person"
+				     href="/#/profile">Profile</mdc-drawer-item>
+		    <mdc-drawer-item start-icon="call_made"
+				     href="/#/promise">Send funds</mdc-drawer-item>
+		    <mdc-drawer-item start-icon="call_received"
+				     href="/#/request">Request funds</mdc-drawer-item>
+	    	</mdc-drawer-list>
+	    </mdc-drawer>
+	    
+	    <!-- <mdc-toolbar slot="toolbar"> -->
+	    <!-- 	<mdc-toolbar-row> -->
+	    <!-- 	    <mdc-toolbar-section align-start > -->
+	    <!-- 		<mdc-toolbar-menu-icon event="toggle-drawer"></mdc-toolbar-menu-icon> -->
+	    <!-- 		<mdc-toolbar-title>HoloFuel</mdc-toolbar-title> -->
+	    <!-- 	    </mdc-toolbar-section> -->
+	    <!-- 	    <mdc-toolbar-section align-end> -->
+	    <!-- 		<mdc-toolbar-icon event="show-help" icon="help"></mdc-toolbar-icon> -->
+	    <!-- 	    </mdc-toolbar-section> -->
+	    <!-- 	</mdc-toolbar-row> -->
+	    <!-- </mdc-toolbar> -->
+	    
+	    <!-- <mdc-drawer slot="drawer"> -->
+	    <!-- 	<mdc-drawer-list> -->
+	    <!-- 	    <mdc-drawer-item start-icon="inbox">Inbox</mdc-drawer-item> -->
+	    <!-- 	    <mdc-drawer-item start-icon="send">Sent Mail</mdc-drawer-item> -->
+	    <!-- 	    <mdc-drawer-item start-icon="drafts">Drafts</mdc-drawer-item> -->
+	    <!-- 	</mdc-drawer-list> -->
+	    <!-- </mdc-drawer> -->
+	    <main>
+		<router-view></router-view>
+	    </main>
+	</mdc-layout-app>
+
+	    <!-- <header class="mdc-toolbar"> -->
+	    <!-- 	<div class="mdc-toolbar__row"> -->
+	    <!-- 	    <section class="mdc-toolbar__section mdc-toolbar__section--align-start"> -->
+	    <!-- 		<a href="#" class="material-icons mdc-toolbar__menu-icon">menu</a> -->
+	    <!-- 	    </section> -->
+	    <!-- 	    <section class="mdc-toolbar__section"> -->
+	    <!-- 		<span class="mdc-toolbar__title">HoloFuel</span> -->
+	    <!-- 	    </section> -->
+	    <!-- 	    <section class="mdc-toolbar__section mdc-toolbar__section--align-end"> -->
+	    <!-- 	    </section> -->
+	    <!-- 	</div> -->
+	    <!-- </header> -->
 	    
 	    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 	    <!-- 	<a class="navbar-brand" -->
@@ -90,8 +139,7 @@
 	    <!-- 	{{ dbInfo.user_hostname }}.[{{ dbInfo.user_name }}] -->
 	    <!-- </div> -->
 	    
-	    <router-view></router-view>
-	</div>
+	    <!-- <router-view></router-view> -->
 
 	<script src="/axios/0.18.0/axios.min.js"></script>
 	<script type="text/javascript">

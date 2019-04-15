@@ -10,8 +10,10 @@ async function init( wsURL ) {
 		const resp			= JSON.parse(await zomeMethod( params || {} ));
 		if ( resp.Ok )
 		    return resp.Ok;
-		else
+		else {
+		    console.error( resp );
 		    throw Error( resp );
+		}
 	    } catch (err) {
 		return err;
 	    }

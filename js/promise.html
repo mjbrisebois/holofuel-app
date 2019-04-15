@@ -1,0 +1,38 @@
+<div id="hf-summary-page">
+
+    <div class="p-2">
+	<mdc-headline class="mb-0">Account</mdc-headline>
+	<mdc-textfield v-model="whoami.agent_address"
+		       readonly fullwidth dense
+		       label="HoloFuel ID"
+		       helptext="Copy to clipboard"
+		       trailing-icon="file_copy"
+		       @icon-action="$root.copyToClipboard( whoami.agent_address )" />
+	<mdc-display class="my-0">
+	    <hf-symbol />{{ ledger.balance }}<br>
+	</mdc-display>
+	<mdc-subheading class="mt-0">
+	    Available <hf-symbol />{{ ledger.available }}
+	</mdc-subheading>
+    </div>
+
+    <div class="px-3">
+	<mdc-title>Send funds</mdc-title>
+	
+	<mdc-textfield v-model="receiver_id" required fullwidth label="Receiver HoloFuel ID" />
+	<mdc-textfield v-model="amount" required fullwidth label="Amount" />
+	<mdc-textfield v-model="calculated_fee" readonly fullwidth label="Calculated fee" />
+	<mdc-textfield v-model="hours" required fullwidth label="Hours until expire" />
+	<mdc-textfield v-model="notes" fullwidth multiline rows="4" label="Notes" />
+	
+	<mdc-button raised @click="confirm_promise=true">Send</mdc-button>
+    </div>
+
+    <mdc-dialog v-model="confirm_promise"
+		title="Confirm send"
+		accept="Yes, send funds" cancel="Cancel"
+		@accept="send_promise( receiver_id, amount, hours, notes )">
+	Are you sure you want to send <hf-symbol />{{ amount }} to {{ receiver_id }}?
+    </mdc-dialog>
+    
+</div>

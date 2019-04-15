@@ -1,12 +1,20 @@
-<div id="hf-summary-page"
-     class="mdc-layout-grid">
+<div id="hf-summary-page">
 
-    <mdc-headline class="mb-0">Account</mdc-headline>
-    <mdc-body class="m-0">{{ whoami.agent_address }}</mdc-body>
-    <mdc-display class="mt-0">
-	<img src="/images/holo/holo-logo.png" style="height: .5em; vertical-align: middle;" />
-	{{ ledger.balance }}
-    </mdc-display>
+    <div class="p-2">
+	<mdc-headline class="mb-0">Account</mdc-headline>
+	<mdc-textfield v-model="whoami.agent_address"
+		       readonly fullwidth dense
+		       label="HoloFuel ID"
+		       helptext="Copy to clipboard"
+		       trailing-icon="file_copy"
+		       @icon-action="$root.copyToClipboard( whoami.agent_address )" />
+	<mdc-display class="my-0">
+	    <hf-symbol />{{ ledger.balance | currency }}<br>
+	</mdc-display>
+	<mdc-subheading class="mt-0">
+	    Available <hf-symbol />{{ ledger.available | currency }}
+	</mdc-subheading>
+    </div>
     
     <mdc-tab-bar @change="selectTab">
 	<mdc-tab icon="swap_horiz">Transactions</mdc-tab>
@@ -14,14 +22,184 @@
     </mdc-tab-bar>
 
     <section v-if="selectedTab === 0">
+	<table>
+	    <thead>
+		<tr>
+		    <th><mdc-text>Details</mdc-text></th>
+		    <th><mdc-text>In</mdc-text></th>
+		    <th><mdc-text>Out</mdc-text></th>
+		</tr>
+	    </thead>
+	    <tbody>
+		<tr class="table-grouping-title">
+		    <th colspan="3"><mdc-subheading class="m-1">Pending</mdc-subheading></th>
+		</tr>
+		<tr v-for="(tx, index) in pending.requests" :key="tx.event[0]">
+		    <td style="width: 60%">
+			<mdc-body>
+			    <b>{{ datetime( tx.event[1], 'long' ) }}</b><br>
+			    {{ tx.event[2].Request.to }}
+			</mdc-body>
+
+			<div class="flex-table">
+			    <div>
+				<mdc-button dense raised @click="dialog_request_confirm( tx )">Approve</mdc-button>
+			    </div>				
+			    <div style="text-align: right;">
+				<mdc-button dense outlined @click="dialog_request_decline( tx )">Decline</mdc-button>
+			    </div>
+			</div>
+		    </td>
+		    <td style="width: 20%; text-align: right;"></td>
+		    <td style="width: 20%; text-align: right;">
+			<mdc-body style="color: #C00;">
+			    <hf-symbol />{{ pending_request_total( tx ) | currency }}<br>
+			    <small>{{ tx.event[2].Request.amount | currency }} + Fee {{ tx.event[2].Request.fee | currency }}</small>
+			</mdc-body>
+		    </td>
+		</tr>
+		<tr v-for="(tx, index) in pending.promises" :key="tx.event[0]">
+		    <td style="width: 60%">
+			<mdc-body>
+			    <b>{{ datetime( tx.event[1], 'long' ) }}</b><br>
+			    {{ tx.event[2].Promise.tx.from }}
+			</mdc-body>
+
+			<div class="flex-table">
+			    <div>
+				<mdc-button dense raised @click="dialog_promise_confirm( tx )">Receive</mdc-button>
+			    </div>				
+			    <div style="text-align: right;">
+				<mdc-button dense outlined @click="dialog_promise_decline( tx )">Decline</mdc-button>
+			    </div>
+			</div>
+		    </td>
+		    <td style="width: 20%; text-align: right;">
+			<mdc-body style="color: #0C0;">
+			    <hf-symbol />{{ pending_promise_total( tx ) | currency }}<br>
+			    <small>{{ tx.event[2].Promise.tx.amount | currency }} + Fee {{ tx.event[2].Promise.tx.fee | currency }}</small>
+			</mdc-body>
+		    </td>
+		    <td style="width: 20%; text-align: right;"></td>
+		</tr>
+	    </tbody>
+	    <tbody>
+		<tr class="table-grouping-title">
+		    <th colspan="3"><mdc-subheading class="m-1">Completed</mdc-subheading></th>
+		</tr>
+		<tr v-for="tx in transactions" :key="tx.index">
+		    <td style="width: 60%">
+			<mdc-body>
+			    <b>{{ datetime( tx.timestamp.event, 'long' ) }}</b><br>
+			    {{ counterparty( tx ) }}
+			</mdc-body>
+		    </td>
+		    <td style="width: 20%; text-align: right;">
+			<mdc-body v-if="tx.state.startsWith('incoming')"
+				  style="color: #0A0;">
+			    <hf-symbol />{{ adjustment( tx ) | currency }}
+			</mdc-body>
+		    </td>
+		    <td style="width: 20%; text-align: right;">
+			<mdc-body v-if="tx.state.startsWith('outgoing')"
+				  style="color: #A00;">
+			    <hf-symbol />{{ adjustment( tx ) | currency }}
+			</mdc-body>
+		    </td>
+		</tr>
+	    </tbody>
+	</table>
     </section>
     
     <section v-if="selectedTab === 1">
-	<mdc-display>Typography</mdc-display>
-	<mdc-headline>Headline</mdc-headline>
-	<mdc-title>Title <mdc-caption>Caption</mdc-caption></mdc-title>
-	<mdc-subheading>Subheading</mdc-subheading>
-	<mdc-body>Body</mdc-body>
+	<table>
+	    <tbody>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Balance</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.balance | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Available</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.available | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Credit</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.credit | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Fees</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.fees | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Payable</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.payable | currency }}</mdc-text>
+		    </td>
+		</tr>
+		<tr>
+		    <td style="width: 50%">
+			<mdc-subheading>Receivable</mdc-subheading>
+		    </td>
+		    <td style="width: 50%; text-align: right;">
+			<mdc-text><hf-symbol />{{ ledger.receivable }}</mdc-text>
+		    </td>
+		</tr>
+	    </tbody>
+	</table>	
     </section>
 
+    <div v-if="request_tx">
+	<mdc-dialog v-model="dialog_request_confirm_open"
+		    title="Approve requested funds"
+		    accept="Yes, send funds" cancel="Cancel"
+		    @accept="send_promise_for_request( request_tx )">
+	    Are you sure you want to send <hf-symbol />{{ request_tx.event[2].Request.amount | currency }}
+	    to {{ request_tx.event[2].Request.to }}?
+	</mdc-dialog>
+	
+	<mdc-dialog v-model="dialog_request_decline_open"
+		    title="Decline requested funds"
+		    accept="Yes, decline request" cancel="Cancel"
+		    @accept="send_decline_for_request( request_tx )">
+	    Are you sure you want to decline the request from {{ request_tx.event[2].Request.to }}
+	    for <hf-symbol />{{ request_tx.event[2].Request.amount | currency }}?
+	</mdc-dialog>
+    </div>
+    
+    <div v-if="promise_tx">
+	<mdc-dialog v-model="dialog_promise_confirm_open"
+		    title="Receive promised funds"
+		    accept="Yes, accept funds" cancel="Cancel"
+		    @accept="send_receive_payment( promise_tx )">
+	    Are you sure you want accept <hf-symbol />{{ promise_tx.event[2].Promise.tx.amount | currency }}
+	    from {{ promise_tx.event[2].Promise.tx.from }}?
+	</mdc-dialog>
+	
+	<mdc-dialog v-model="dialog_promise_decline_open"
+		    title="Decline promiseed funds"
+		    accept="Yes, decline promise" cancel="Cancel"
+		    @accept="send_decline_payment( promise_tx )">
+	    Are you sure you want to decline the funds from {{ promise_tx.event[2].Promise.tx.from }}
+	    for <hf-symbol />{{ promise_tx.event[2].Promise.tx.amount | currency }}?
+	</mdc-dialog>
+    </div>
+    
 </div>

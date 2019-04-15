@@ -1,8 +1,11 @@
-var path			= require('path');
-var webpack			= require('webpack');
+const path			= require('path');
+const webpack			= require('webpack');
+const Dotenv			= require('dotenv-webpack');
+
 
 module.exports = {
-    mode: 'production', // production | development
+    target: 'web',
+    mode: 'development', // production | development
     entry: [ '@babel/polyfill', './js/app.js' ],
     output: {
 	path: path.resolve(__dirname, 'build'),
@@ -33,5 +36,8 @@ module.exports = {
     stats: {
 	colors: true
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    plugins: [
+	new Dotenv(),
+    ],
 };
