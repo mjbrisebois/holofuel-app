@@ -108,7 +108,7 @@
 			    {{ state_name( tx ) }}<br/>
 			    <hf-symbol />{{ adjustment( tx ) | currency }}
 			    <br/>
-			    <small>Fee {{ tx.adjustment.fees.Ok | currency }}</small>
+			    <small>Fee {{ transaction( tx ).fee | currency }}</small>
 			</mdc-body>
 		    </td>
 		</tr>

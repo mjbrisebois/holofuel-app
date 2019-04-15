@@ -145,6 +145,15 @@ Vue.filter('currency', function (value) {
 		    const state			= state_object( tx.state );
                     return state.state
                 },
+                transaction: function( tx ) {
+                    // For each type of tx Event, find and return the underlying Transaction
+                    return ( tx.event.Request
+                             || ( tx.event.Promise && tx.event.Promise.tx )
+                             || ( tx.event.Invoice && tx.event.Invoice.promise.tx )
+                             || ( tx.event.Cheque  && tx.event.Cheque.invoice.promise.tx )
+                             || ( tx.event.Receipt && tx.event.Receipt.cheque.invoice.promise.tx )
+                             || `${tx.event}?`)
+                },
 		adjustment: function ( tx ) {
 		    const state			= state_object( tx.state );
 
