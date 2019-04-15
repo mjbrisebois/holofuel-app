@@ -53,8 +53,9 @@
 		    <td style="width: 20%; text-align: right;"></td>
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body style="color: #C00;">
-			    <hf-symbol />{{ pending_request_total( tx ) | currency }}<br>
-			    <small>{{ tx.event[2].Request.amount | currency }} + Fee {{ tx.event[2].Request.fee | currency }}</small>
+			    <hf-symbol />{{ pending_request_total( tx ) | currency }}
+			    <br/>
+			    <small>Fee {{ pending_request_fees( tx ) | currency }}</small>
 			</mdc-body>
 		    </td>
 		</tr>
@@ -77,7 +78,7 @@
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body style="color: #0C0;">
 			    <hf-symbol />{{ pending_promise_total( tx ) | currency }}<br>
-			    <small>{{ tx.event[2].Promise.tx.amount | currency }} + Fee {{ tx.event[2].Promise.tx.fee | currency }}</small>
+			    <small>{{ tx.event[2].Promise.tx.amount | currency }}</small>
 			</mdc-body>
 		    </td>
 		    <td style="width: 20%; text-align: right;"></td>
@@ -97,13 +98,17 @@
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body v-if="tx.state.startsWith('incoming')"
 				  style="color: #0A0;">
+			    {{ state_name( tx ) }}<br/>
 			    <hf-symbol />{{ adjustment( tx ) | currency }}
 			</mdc-body>
 		    </td>
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body v-if="tx.state.startsWith('outgoing')"
 				  style="color: #A00;">
+			    {{ state_name( tx ) }}<br/>
 			    <hf-symbol />{{ adjustment( tx ) | currency }}
+			    <br/>
+			    <small>Fee {{ tx.adjustment.fees.Ok | currency }}</small>
 			</mdc-body>
 		    </td>
 		</tr>
