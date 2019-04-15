@@ -313,6 +313,8 @@ Vue.filter('currency', function (value) {
 		    this.receiver_id			= null;
 		    this.amount				= "0.00";
 		    this.notes				= null;
+		    
+		    this.$router.push( this.$root.relative('/') );
 		},
 		...mapActions([
 		]),
@@ -356,6 +358,8 @@ Vue.filter('currency', function (value) {
 		    this.spender_id			= null;
 		    this.amount				= "0.00";
 		    this.notes				= null;
+
+		    this.$router.push( this.$root.relative('/') );
 		},
 		...mapActions([
 		]),
@@ -400,7 +404,10 @@ Vue.filter('currency', function (value) {
 	},
 	methods: {
 	    relative: function ( path ) {
-		return '/#/' + ( this.port || DEFAULT_WS_PORT ) + '/' + path.replace(/^\/|\/$/g, '');
+		return '/' + ( this.port || DEFAULT_WS_PORT ) + '/' + path.replace(/^\/|\/$/g, '');
+	    },
+	    relativeLink: function ( path ) {
+		return '/#' + this.relative( path );
 	    },
 	    copyToClipboard: function ( text ) {
 		clipboard.writeText( text );

@@ -54,105 +54,26 @@
 		
 	    	<mdc-drawer-list>
 		    <mdc-drawer-item start-icon="dashboard"
-				     :href="relative('/')">Dashboard</mdc-drawer-item>
+				     :href="relativeLink('/')">Dashboard</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="person"
-				     :href="relative('/profile')">Profile</mdc-drawer-item>
+				     :href="relativeLink('/profile')">Profile</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="call_made"
-				     :href="relative('/promise')">Send funds</mdc-drawer-item>
+				     :href="relativeLink('/promise')">Send funds</mdc-drawer-item>
 		    <mdc-drawer-item start-icon="call_received"
-				     :href="relative('/request')">Request funds</mdc-drawer-item>
+				     :href="relativeLink('/request')">Request funds</mdc-drawer-item>
 	    	</mdc-drawer-list>
 	    </mdc-drawer>
 	    
-	    <!-- <mdc-toolbar slot="toolbar"> -->
-	    <!-- 	<mdc-toolbar-row> -->
-	    <!-- 	    <mdc-toolbar-section align-start > -->
-	    <!-- 		<mdc-toolbar-menu-icon event="toggle-drawer"></mdc-toolbar-menu-icon> -->
-	    <!-- 		<mdc-toolbar-title>HoloFuel</mdc-toolbar-title> -->
-	    <!-- 	    </mdc-toolbar-section> -->
-	    <!-- 	    <mdc-toolbar-section align-end> -->
-	    <!-- 		<mdc-toolbar-icon event="show-help" icon="help"></mdc-toolbar-icon> -->
-	    <!-- 	    </mdc-toolbar-section> -->
-	    <!-- 	</mdc-toolbar-row> -->
-	    <!-- </mdc-toolbar> -->
-	    
-	    <!-- <mdc-drawer slot="drawer"> -->
-	    <!-- 	<mdc-drawer-list> -->
-	    <!-- 	    <mdc-drawer-item start-icon="inbox">Inbox</mdc-drawer-item> -->
-	    <!-- 	    <mdc-drawer-item start-icon="send">Sent Mail</mdc-drawer-item> -->
-	    <!-- 	    <mdc-drawer-item start-icon="drafts">Drafts</mdc-drawer-item> -->
-	    <!-- 	</mdc-drawer-list> -->
-	    <!-- </mdc-drawer> -->
 	    <main>
 		<router-view></router-view>
 	    </main>
 	</mdc-layout-app>
-
-	    <!-- <header class="mdc-toolbar"> -->
-	    <!-- 	<div class="mdc-toolbar__row"> -->
-	    <!-- 	    <section class="mdc-toolbar__section mdc-toolbar__section--align-start"> -->
-	    <!-- 		<a href="#" class="material-icons mdc-toolbar__menu-icon">menu</a> -->
-	    <!-- 	    </section> -->
-	    <!-- 	    <section class="mdc-toolbar__section"> -->
-	    <!-- 		<span class="mdc-toolbar__title">HoloFuel</span> -->
-	    <!-- 	    </section> -->
-	    <!-- 	    <section class="mdc-toolbar__section mdc-toolbar__section--align-end"> -->
-	    <!-- 	    </section> -->
-	    <!-- 	</div> -->
-	    <!-- </header> -->
-	    
-	    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
-	    <!-- 	<a class="navbar-brand" -->
-	    <!-- 	   href="#"><small>P&amp;G / Asset Discovery /</small> Administration</a> -->
-		
-	    <!-- 	<button class="navbar-toggler" -->
-	    <!-- 		type="button" -->
-	    <!-- 		data-toggle="collapse" -->
-	    <!-- 		data-target="#navbarSupportedContent" -->
-	    <!-- 		aria-controls="navbarSupportedContent" -->
-	    <!-- 		aria-expanded="false" -->
-	    <!-- 		aria-label="Toggle navigation"> -->
-	    <!-- 	    <span class="navbar-toggler-icon"></span> -->
-	    <!-- 	</button> -->
-		
-	    <!-- 	<div class="collapse navbar-collapse" -->
-	    <!-- 	     id="navbarSupportedContent"> -->
-	    <!-- 	    <ul class="navbar-nav mr-auto"> -->
-	    <!-- 		<li class="nav-item"> -->
-	    <!-- 		    <router-link class="nav-link" -->
-	    <!-- 				 to="/">Home</router-link> -->
-	    <!-- 		</li> -->
-	    <!-- 		<li class="nav-item"> -->
-	    <!-- 		    <router-link class="nav-link" -->
-	    <!-- 				 to="/reparse">Reparse Data</router-link> -->
-	    <!-- 		</li> -->
-	    <!-- 	    </ul> -->
-	    <!-- 	    <form class="form-inline my-2 my-lg-0"> -->
-	    <!-- 		<input class="form-control mr-sm-2" -->
-	    <!-- 		       type="search" -->
-	    <!-- 		       placeholder="Search" -->
-	    <!-- 		       aria-label="Search"> -->
-	    <!-- 		<button class="btn btn-outline-success my-2 my-sm-0" -->
-	    <!-- 			type="submit">Search</button> -->
-	    <!-- 	    </form> -->
-	    <!-- 	</div> -->
-	    <!-- </nav> -->
-	    
-	    <!-- <div v-if="dbInfo" class="alert alert-warning" role="alert"> -->
-	    <!-- 	<b>Current DB Connection: ({{ dbInfo.db_type }})</b> -->
-	    <!-- 	<i>{{ dbInfo.db_hostname }}.[{{ dbInfo.db_name }}]</i> -->
-	    <!-- 	<b>via user</b> -->
-	    <!-- 	{{ dbInfo.user_hostname }}.[{{ dbInfo.user_name }}] -->
-	    <!-- </div> -->
-	    
-	    <!-- <router-view></router-view> -->
 
 	<script src="/axios/0.18.0/axios.min.js"></script>
 	<script type="text/javascript">
     	  Vue.prototype.$http = axios;
 	</script>
 	
-	<!-- <script src="/js/app.js"></script> -->
 	<script src="/build/webpacked.app.js"></script>
     </body>
 </html>
