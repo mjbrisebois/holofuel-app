@@ -141,6 +141,19 @@ Vue.filter('currency', function (value) {
 			return `${tx.state}?`;
 		    }
 		},
+                state_name: function( tx ) {
+		    const state			= state_object( tx.state );
+                    return state.state
+                },
+                transaction: function( tx ) {
+                    // For each type of tx Event, find and return the underlying Transaction
+                    return ( tx.event.Request
+                             || ( tx.event.Promise && tx.event.Promise.tx )
+                             || ( tx.event.Invoice && tx.event.Invoice.promise.tx )
+                             || ( tx.event.Cheque  && tx.event.Cheque.invoice.promise.tx )
+                             || ( tx.event.Receipt && tx.event.Receipt.cheque.invoice.promise.tx )
+                             || `${tx.event}?`)
+                },
 		adjustment: function ( tx ) {
 		    const state			= state_object( tx.state );
 
@@ -170,8 +183,11 @@ Vue.filter('currency', function (value) {
 		pending_request_total: function ( tx ) {
 		    return parseFloat( tx.event[2].Request.amount ) + parseFloat( tx.event[2].Request.fee );
 		},
+		pending_request_fees: function ( tx ) {
+		    return parseFloat( tx.event[2].Request.fee );
+		},
 		pending_promise_total: function ( tx ) {
-		    return parseFloat( tx.event[2].Promise.tx.amount ) + parseFloat( tx.event[2].Promise.tx.fee );
+		    return parseFloat( tx.event[2].Promise.tx.amount );
 		},
 		dialog_request_confirm: function ( tx ) {
 		    this.request_tx			= tx;
