@@ -183,20 +183,14 @@ Vue.filter('currency', function (value) {
 		    this.dialog_request_decline_open	= true;
 		},
 		send_promise_for_request: function( request ) {
-		    const req_hash			= request.event[0];
-		    const { to, amount, ..._ }		= request.event[2].Request;
-		    const deadline			= now_plus_hours( 24 );
-		    
 		    notify.open({
 			type: 'info',
 			message: "Approving request",
 		    });
 		    this.$store.dispatch('approve_request', {
-			to,
-			amount,
-			deadline,
-			request: req_hash,
-		    });
+                        request: request.event[0],
+                        ...request.event[2].Request
+                    });
 		    notify.success("Funds have been promised");
 		    this.request_tx			= null;
 		},
