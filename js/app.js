@@ -162,32 +162,6 @@ Vue.filter('currency', function (value) {
                              || ( tx.event.Receipt && tx.event.Receipt.cheque.invoice.promise.tx )
                              || `${tx.event}?`)
                 },
-		adjustment: function ( tx ) {
-		    const state			= state_object( tx.state );
-
-		    if ( state.state === 'completed' )
-			return tx.adjustment.balance.Ok;
-		    
-		    if ( state.incoming ) {
-			switch ( state.state ) {
-			case "requested":
-			    return tx.event.Request.amount;
-			default:
-			    return `${tx.state}?`;
-			}
-		    }
-		    else if ( state.outgoing ) {
-			switch ( state.state ) {
-			case "approved":
-			    return tx.adjustment.payable.Ok;
-			default:
-			    return `${tx.state}?`;
-			}
-		    }
-		    else {
-			return `${tx.state}?`;
-		    }
-		},
 		pending_request_amount: function ( tx ) {
 		    return parseFloat( tx.event[2].Request.amount );
 		},

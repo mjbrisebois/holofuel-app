@@ -97,14 +97,14 @@
 			<mdc-body v-if="tx.state.startsWith('incoming')"
 				  style="color: #0A0;">
 			    {{ state_name( tx ) }}<br/>
-			    <hf-symbol />{{ adjustment( tx ) | currency }}
+			    <hf-symbol />{{ transaction( tx ).amount | currency }}
 			</mdc-body>
 		    </td>
 		    <td style="width: 20%; text-align: right;">
 			<mdc-body v-if="tx.state.startsWith('outgoing')"
 				  style="color: #A00;">
 			    {{ state_name( tx ) }}<br/>
-			    <hf-symbol />{{ adjustment( tx ) | currency }}
+			    <hf-symbol />{{ transaction( tx ).amount | currency }}
 			    <br/>
 			    <small>Fee {{ transaction( tx ).fee | currency }}</small>
 			</mdc-body>
