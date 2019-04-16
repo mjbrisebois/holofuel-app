@@ -97,10 +97,10 @@ Vue.filter('currency', function (value) {
 	    "data": function() {
 		return {
 		    "selectedTab": 0,
-		    "request_tx": null,
+		    "request_preauth": null,
 		    "dialog_request_confirm_open": false,
 		    "dialog_request_decline_open": false,
-		    "promise_tx": null,
+		    "promise_preauth": null,
 		    "dialog_promise_confirm_open": false,
 		    "dialog_promise_decline_open": false,
 		};
@@ -174,44 +174,44 @@ Vue.filter('currency', function (value) {
 		pending_promise_amount: function ( tx ) {
 		    return parseFloat( tx.event[2].Promise.tx.amount );
 		},
-		dialog_request_confirm: function ( tx ) {
-		    this.request_tx			= tx;
+		dialog_request_confirm: function ( request_preauth ) {
+		    this.request_preauth		= request_preauth;
 		    this.dialog_request_confirm_open	= true;
 		},
-		dialog_request_decline: function ( tx ) {
-		    this.request_tx			= tx;
+		dialog_request_decline: function ( request_preauth ) {
+		    this.request_preauth		= request_preauth;
 		    this.dialog_request_decline_open	= true;
 		},
-		send_promise_for_request: function( request ) {
+		send_promise_for_request: function( request_preauth ) {
 		    notify.open({
 			type: 'info',
 			message: "Approving request",
 		    });
 		    this.$store.dispatch('approve_request', {
-                        request: request.event[0],
-                        ...request.event[2].Request
+                        request: request_preauth.event[0],
+                        ...request_preauth.event[2].Request
                     });
 		    notify.success("Funds have been promised");
-		    this.request_tx			= null;
+		    this.request_preauth		= null;
 		},
 		send_decline_for_request: function( request_hash ) {
 		    console.log( "Decline request", request_hash );
-		    this.request_tx			= null;
+		    this.request_preauth		= null;
 		    // this.$store.dispatch('decline_request', {
 		    // })
 		},
-		dialog_promise_confirm: function ( tx ) {
-		    this.promise_tx			= tx;
+		dialog_promise_confirm: function ( promise_preauth ) {
+		    this.promise_preauth		= promise_preauth;
 		    this.dialog_promise_confirm_open	= true;
 		},
-		dialog_promise_decline: function ( tx ) {
-		    this.promise_tx			= tx;
+		dialog_promise_decline: function ( promise_preauth ) {
+		    this.promise_preauth		= promise_preauth;
 		    this.dialog_promise_decline_open	= true;
 		},
-		send_receive_payment: function( tx ) {
-		    const promise			= tx.event[2].Promise
-		    const promise_sig			= "[signature]";
-		    const promise_commit		= tx.event[0];
+		send_receive_payment: function( promise_preauth ) {
+		    const promise			= promise_preauth.event[2].Promise
+		    const promise_sig			= promise_preauth.provenance[1];
+		    const promise_commit		= promise_preauth.event[0];
 		    
 		    notify.open({
 			type: 'info',
@@ -223,11 +223,11 @@ Vue.filter('currency', function (value) {
 			promise_commit,
 		    });
 		    notify.success("Payment received");
-		    this.promise_tx			= null;
+		    this.promise_preauth		= null;
 		},
 		send_decline_payment: function( request_hash ) {
 		    console.log( "Decline payment", request_hash );
-		    this.promise_tx			= null;
+		    this.promise_preauth		= null;
 		    // this.$store.dispatch('decline_promise', {
 		    // })
 		},
