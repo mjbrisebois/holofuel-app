@@ -51,7 +51,7 @@ to the Send and Request funds pages can be found.
    #+BEGIN_EXAMPLE bash
    $ cd ~/src/holofuel-app
    $ make start-bootstrap-agent-dna
-   #+END_EXAMPLE bash
+   #+END_EXAMPLE
 
    This creates a file in your ~/src/holofuel directory, used to start subsequent DNA agents
    connected via the "bootstrap" agent.  In other tabs/windows, run:
@@ -59,15 +59,14 @@ to the Send and Request funds pages can be found.
    #+BEGIN_EXAMPLE bash
    $ cd ~/src/holofuel-app
    $ make start-bootstrap-dna-1
-   #+END_EXAMPLE bash
+   #+END_EXAMPLE
 
    And, in another tab/window (if desired):
 
    #+BEGIN_EXAMPLE bash
    $ cd ~/src/holofuel-app
    $ make start-bootstrap-dna-2
-   #+END_EXAMPLE bash
-
+   #+END_EXAMPLE
 
 ** Running the =holofuel-app= GUI
 
@@ -79,7 +78,6 @@ to the Send and Request funds pages can be found.
    $ cd ~/src/holofuel-app
    $ python -m SimpleHTTPServer
    #+END_EXAMPLE
-
 
    This will redirect you to [[http://localhost:8000/#/3000/]] (note the port 3000, assigned to the first "bootstrap" agent).
 
