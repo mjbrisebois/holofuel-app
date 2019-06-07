@@ -3,8 +3,7 @@ SHELL			= /bin/bash
 start-bootstrap-agent-dna:
 	cd ~/src/holofuel;								\
 	echo "" > bootstrap-agent.output;						\
-	HC_N3H_MODE=HACK								\
-	HC_N3H_PATH=~/src/n3h								\
+	HC_N3H_MODE=REAL								\
 	HC_AGENT=testAgent_bootstrap							\
 	HC_N3H_WORK_DIR=$$( mktemp -d )							\
 	hc run --networked --logging --port 3000 | tee -a bootstrap-agent.output
@@ -17,8 +16,7 @@ start-agent-dna-%:
 		| sed 's/[[:space:]]*\- ipc:[[:space:]]*\(.*\)/\1/' );			\
 	P2P=$$( ( tail +1f bootstrap-agent.output & ) | grep -m 1 "\- p2p\:"		\
 		| sed 's/[[:space:]]*\- p2p:[[:space:]]*\[\"\(.*\)".*/\1/' );		\
-	HC_N3H_MODE=HACK								\
-	HC_N3H_PATH=~/src/n3h								\
+	HC_N3H_MODE=REAL								\
 	HC_AGENT=testAgent_$*								\
 	HC_N3H_WORK_DIR=$$( mktemp -d )							\
 	HC_N3H_BOOTSTRAP_NODE=$$P2P							\
