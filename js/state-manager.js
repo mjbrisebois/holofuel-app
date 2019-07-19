@@ -106,7 +106,7 @@ async function init( wsURL ) {
     });
 
     async function initializeWsConnection( port ) {
-	HoloFuel				= await connect('ws://localhost:' + port);
+	HoloFuel				= await connect('ws://'+ location.hostname +':' + port);
 	global.HF__debug			= HoloFuel;
 
 	store.dispatch('get_whoami');
