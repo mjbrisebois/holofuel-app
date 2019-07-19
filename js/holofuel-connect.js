@@ -1,22 +1,50 @@
-import { connect }			from "@holochain/hc-web-client";
+import * as holochainClient		from "@holochain/hc-web-client";
+import hClient				from "./hClient.js";
 
 async function init( wsURL ) {
-    const {call, callZome, close}		= await connect( wsURL );
 
+    console.log("Initialize holochain connection: ", wsURL );
+    // const holochainClient			= connect( wsURL );
+
+    const holoClientOpts			= {
+	hostUrl:	'ws://' + location.hostname + "",
+	happId:		"QmS1yexRDsvEM5nZcsz6YHWN6gLbU38oD9e3yoo7RtnXSi", //location.hostname.split('qmpxnfajazkn1uacnxdjgerakytvvwm5gukgytv3do8n7k'),
+    };
+    console.log("Initialize holo-client wrapper with options", holoClientOpts, "around", holochainClient );
+
+    hClient.installLoginDialog();
+    const client				= await hClient.makeWebClient( holochainClient, holoClientOpts );
+    
+    console.log("Initialize client connection", client );
+    const {call, callZome, close}		= await client.connect();
+    
+    console.log("Trigger login prompt");
+    await hClient.startLoginProcess( 'test@example.com', 'Password1234', false ); // 'test@example.com', 'Password1234' 
+
+    const agent_id				= await hClient.getCurrentAgentId();
+
+    console.log("Connected to envoy");
     function mapZomeMethod( method_name ) {
-	const zomeMethod			= callZome( 'test-instance', 'transactions', method_name );
+	const zomeMethod			= callZome( `QmYWrvP8PoLx25e26GAA3RYbCbEwwN8xTbm2NjaW9yq2h3::${agent_id}`, 'transactions', method_name );
+
 	return async function ( params ) {
+	    let resp;
+	    
 	    try {
-		const resp			= JSON.parse(await zomeMethod( params || {} ));
-		if ( resp.Ok )
-		    return resp.Ok;
-		else {
-		    console.error( resp );
-		    throw Error( resp );
-		}
+		resp				= await zomeMethod( params || {} );
+		// if ( resp.Ok )
+		//     return resp.Ok;
+		// else {
+		//     console.error( resp );
+		//     throw Error( resp );
+		// }
 	    } catch (err) {
+		console.error(err);
 		return err;
 	    }
+
+	    console.log("Zome call response for request 'transactions->"+ method_name +"':", resp );
+	    return resp;
 	};
     }
 
