@@ -13,7 +13,7 @@ async function init( wsURL ) {
     const connectionReady			= async function () {
 	await waitUntil(() => {
 	    return HoloFuel !== null;
-	}, 5000, 100 );
+	}, 60000, 100 );
 	return HoloFuel;
     }
 
@@ -106,7 +106,7 @@ async function init( wsURL ) {
     });
 
     async function initializeWsConnection( port ) {
-	HoloFuel				= await connect('ws://'+ location.hostname +':' + port);
+	HoloFuel				= await connect('ws://'+ location.hostname + ':' + port);
 	global.HF__debug			= HoloFuel;
 
 	store.dispatch('get_whoami');
