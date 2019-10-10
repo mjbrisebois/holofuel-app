@@ -6,7 +6,7 @@ start-bootstrap-agent-dna:
 	HC_N3H_MODE=REAL								\
 	HC_AGENT=testAgent_bootstrap							\
 	HC_N3H_WORK_DIR=$$( mktemp -d )							\
-	hc run --networked --logging --port 3000 | tee -a bootstrap-agent.output
+	hc run --networked --logging --port 10000 | tee -a bootstrap-agent.output
 
 start-agent-dna: start-agent-dna-1
 start-agent-dna-%:
@@ -54,8 +54,8 @@ conductor-%.toml: keystore-%.key
 	AGENT=$*;									\
 	PUBKEY=$$( ls -l $< ); PUBKEY=$${PUBKEY##*/};					\
 	KEYFILE=$<;									\
-	WSPORT=$$(( 3000 + $* ));							\
-	UIPORT=$$(( 8800 + $* ));							\
+	WSPORT=$$(( 10000 + $* ));							\
+	UIPORT=$$((  8800 + $* ));							\
 	IPCURI=$$( if (( $* )); then							\
 	  sed -n 's/[[:space:]]*\- ipc:[[:space:]]*\(.*\)/\1/p'				\
 	    < conductor-0.out;								\

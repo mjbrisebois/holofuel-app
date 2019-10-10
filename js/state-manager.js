@@ -39,7 +39,8 @@ async function init( wsURL ) {
 		Object.entries( payload ).map(function ( [k, value] ) {
 		    payload[k]			= parseFloat( value );
 		});
-		payload.available		= payload.balance + payload.credit - payload.payable;
+                // As of v0.11.0, HoloFuel Ledger contains the net available balance
+		//payload.available		= payload.balance + payload.credit - payload.payable;
 		state.ledger			= payload;
 	    },
 	    set_transactions: function ( state, payload ) {
