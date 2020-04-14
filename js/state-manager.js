@@ -4,6 +4,7 @@ import Vuex				from 'vuex'
 import createLogger			from 'vuex/dist/logger'
 import * as waitUntil			from 'async-wait-until';
 
+
 Vue.use( Vuex );
 
 async function init( wsURL ) {
@@ -13,7 +14,7 @@ async function init( wsURL ) {
     const connectionReady			= async function () {
 	await waitUntil(() => {
 	    return HoloFuel !== null;
-	}, 5000, 100 );
+	}, 30000, 100 );
 	return HoloFuel;
     }
 
@@ -56,6 +57,7 @@ async function init( wsURL ) {
 		
 		this.dispatch( 'get_transactions' );
 		this.dispatch( 'get_pending' );
+		this.dispatch( 'get_whoami' );
 	    },
 	    get_whoami: async function ( context ) {
 		const resp			= await HoloFuel.whoami();
@@ -63,10 +65,15 @@ async function init( wsURL ) {
 	    },
 	    get_ledger: async function ( context ) {
 		const resp			= await HoloFuel.ledger_state();
+		console.log("get_ledger", resp )
 		context.commit('set_ledger', resp );
 	    },
 	    get_transactions: async function ( context ) {
 		const resp			= await HoloFuel.list_transactions();
+
+		// console.log("get_transactions", resp );
+		// console.log("get_transactions", resp.ledger )
+
 		context.commit('set_ledger', resp.ledger );
 		context.commit('set_transactions', resp.transactions );
 	    },
@@ -105,9 +112,11 @@ async function init( wsURL ) {
 	}
     });
 
-    async function initializeWsConnection( port ) {
-	HoloFuel				= await connect('ws://localhost:' + port);
+    async function initializeWsConnection( uid ) {
+	HoloFuel				= await connect( uid );
 	global.HF__debug			= HoloFuel;
+
+	await connect.ready;
 
 	store.dispatch('get_whoami');
 	store.dispatch('get_ledger');

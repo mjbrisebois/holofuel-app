@@ -1,0 +1,65 @@
+
+persistence_dir = "conductor"
+
+
+# -----------  Agents  -----------
+[[agents]]
+id = "agent-1"
+name = "Agent 1"
+public_address = "AGENT1_HCID"
+keystore_file = "agent-1.key.json"
+
+[[agents]]
+id = "agent-2"
+name = "Agent 2"
+public_address = "AGENT2_HCID"
+keystore_file = "agent-2.key.json"
+
+
+# -----------  DNAs  -----------
+[[dnas]]
+id = "holofuel"
+file = "dnas/holofuel.dna.json"
+hash = "QmWvWtw1P2nduQqk8uKpfhAeUd72bSU2gFH7TLrQm1Bbfw"
+
+
+# -----------  Instances  -----------
+[[instances]]
+id = "app-name::AGENT1_HCID-holofuel"
+dna = "holofuel"
+agent = "agent-1"
+
+    [instances.storage]
+    type = "file"
+    path = "conductor/agent-1-holofuel"
+
+[[instances]]
+id = "app-name::AGENT2_HCID-holofuel"
+dna = "holofuel"
+agent = "agent-2"
+
+    [instances.storage]
+    type = "file"
+    path = "conductor/agent-2-holofuel"
+
+
+# -----------  Interfaces  -----------
+[[interfaces]]
+id = "administrator"
+admin = true
+
+    [interfaces.driver]
+    type = "websocket"
+    port = 42211
+
+    [[interfaces.instances]]
+    id = "app-name::AGENT1_HCID-holofuel"
+    
+    [[interfaces.instances]]
+    id = "app-name::AGENT2_HCID-holofuel"
+
+
+# -----------  Network  -----------
+[network]
+type = "sim2h"
+sim2h_url = "SIM2H_URL"

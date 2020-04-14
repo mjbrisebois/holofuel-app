@@ -1,0 +1,10 @@
+{
+    "port": 24200,
+    "instance_prefix": "app-name",
+    "agent_id": "HcSCJdPS77UInzsgzrRjnKZujniy96wipmNxAoFdxwvwrhvoWrdCQBHkcxb3cai",
+    "log_level": true,
+    "connection": {
+	"secure": false,
+	"port": 42211
+    }
+}

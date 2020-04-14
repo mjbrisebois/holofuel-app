@@ -23,6 +23,7 @@
       "webpack-cli": "^3.2.1"
    },
    "dependencies": {
+      "@holo-host/web-sdk": "^0.1.0",
       "@holochain/hc-web-client": "^0.4.0",
       "async-wait-until": "^1.2.4",
       "clipboard-polyfill": "^2.8.0",
