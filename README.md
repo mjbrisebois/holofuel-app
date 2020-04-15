@@ -31,3 +31,6 @@ make build
 ```
 
 Finally, run a simple HTTP server from the root of this git repo (tested on port 80).
+
+Test user emails are set by `web_user_legend` in the `chaperone-server` configuration file
+([./chaperone-config.js](./chaperone-config.js)).  Passwords are not used during development.
