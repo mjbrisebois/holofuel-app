@@ -27,7 +27,7 @@ make start-chaperone
 ### Web UI
 
 ```bash
-npm run build
+make build
 ```
 
-Finally, run a simple HTTP server from the root of this git repo.
+Finally, run a simple HTTP server from the root of this git repo (tested on port 80).

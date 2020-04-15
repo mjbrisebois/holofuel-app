@@ -11,6 +11,13 @@ use-local-web-sdk:
 use-npm-web-sdk:
 	npm uninstall @holo-host/web-sdk; npm install --save @holo-host/web-sdk
 
+
+package-lock.json: package.json
+	npm install
+	touch $@
+node_modules: package-lock.json
+	npm install
+
 #
 # Sim2h Server
 #
@@ -71,5 +78,12 @@ agent-%.key.json:
 #
 # Chaperone Server
 #
-start-chaperone:	agents
+start-chaperone:	agents node_modules
 	npx chaperone-server --config chaperone-config.js
+
+
+#
+# Web App
+#
+build:		node_modules
+	npm run build
