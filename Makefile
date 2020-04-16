@@ -7,7 +7,9 @@ http-server:
 .PHONY:
 
 use-local-web-sdk:
-	npm uninstall @holo-host/web-sdk; npm install --save ../web-sdk/holo-host-web-sdk-0.1.0.tgz
+	npm uninstall @holo-host/web-sdk; npm install --save ../web-sdk/
+use-tar-web-sdk:
+	npm uninstall @holo-host/web-sdk; npm install --save ../web-sdk/holo-host-web-sdk-0.1.1.tgz
 use-npm-web-sdk:
 	npm uninstall @holo-host/web-sdk; npm install --save @holo-host/web-sdk
 

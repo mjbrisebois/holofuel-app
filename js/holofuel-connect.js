@@ -2,6 +2,7 @@ import { Connection }				from "@holo-host/web-sdk";
 
 console.log("Web SDK init (in holofuel-connect.js) has been loaded");
 const envoy					= new Connection();
+global.SDK_debug				= envoy;
 
 async function init( uid ) {
 
@@ -39,6 +40,7 @@ async function init( uid ) {
 
     return HoloFuel;
 }
+init.envoy			= envoy;
 init.ready			= envoy.ready().then(() => envoy.signIn());
 
 export default init;

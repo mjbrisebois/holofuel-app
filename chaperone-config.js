@@ -1,7 +1,14 @@
 
+const path				= require('path');
 const fs				= require('fs');
-const agent1_hcid			= fs.readFileSync("./agent-1.hcid", "utf8").trim();
-const agent2_hcid			= fs.readFileSync("./agent-2.hcid", "utf8").trim();
+
+function get_file_contents ( relative ) {
+    const filepath			= path.resolve( __dirname, relative );
+    return fs.readFileSync( filepath, "utf8" );
+}
+
+const agent1_hcid			= get_file_contents("./agent-1.hcid").trim();
+const agent2_hcid			= get_file_contents("./agent-2.hcid").trim();
 
 module.exports = {
     "instance_prefix": "app-name",

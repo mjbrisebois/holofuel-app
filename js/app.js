@@ -88,8 +88,6 @@ Vue.filter('currency', function (value) {
 	};
     }
 
-    await initializeWsConnection();
-
     const routeComponents			= {
 	"/": {
 	    "template": (await import('./home.html')).default,
@@ -326,8 +324,6 @@ Vue.filter('currency', function (value) {
     };
     console.log( routeComponents );
 
-    store.dispatch('start_auto_fetch');
-
     const routes				= [];
     for (let [ path, component ] of Object.entries( routeComponents )) {
 	routes.push({ path, component });
@@ -371,5 +367,9 @@ Vue.filter('currency', function (value) {
     }).$mount('#app');
 
     global.App					= app;
+
+    await initializeWsConnection();
+
+    store.dispatch('start_auto_fetch');
     
 })(window);

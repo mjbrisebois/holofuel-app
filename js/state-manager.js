@@ -9,6 +9,7 @@ Vue.use( Vuex );
 
 async function init( wsURL ) {
 
+    let Envoy					= connect.envoy;
     let HoloFuel				= null;
 
     const connectionReady			= async function () {
@@ -18,17 +19,28 @@ async function init( wsURL ) {
 	return HoloFuel;
     }
 
+    function empty_state () {
+	return {
+	    auto_fetch_interval_id: null,
+	    whoami: {
+		"dna_address": "",
+		"dna_name": "",
+		"agent_id":{
+		    "nick":"",
+		    "pub_sign_key":"",
+		},
+		"agent_address":"",
+	    },
+	    ledger: {},
+	    transactions: {},
+	    pending: {},
+	};
+    }
     const store					= new Vuex.Store({
 	plugins: process.env.NODE_ENV !== 'production' ? [
 	    createLogger({ collapsed: true, })
 	] : [],
-	state: {
-	    auto_fetch_interval_id: null,
-	    whoami: {},
-	    ledger: {},
-	    transactions: {},
-	    pending: {},
-	},
+	state: empty_state(),
 	mutations: {
 	    set_auto_fetch_interval_id: function ( state, iid ) {
 		state.auto_fetch_interval_id	= iid;
@@ -110,6 +122,12 @@ async function init( wsURL ) {
 		this.dispatch( 'refresh_lists' );
 	    },
 	}
+    });
+
+    Envoy.on("signout", () => {
+	HoloFuel				= null;
+	Object.assign( store.state, empty_state() );
+	Envoy.signIn();
     });
 
     async function initializeWsConnection( uid ) {
