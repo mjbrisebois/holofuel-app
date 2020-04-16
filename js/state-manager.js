@@ -129,6 +129,11 @@ async function init( wsURL ) {
 	Object.assign( store.state, empty_state() );
 	Envoy.signIn();
     });
+    Envoy.on("signin", () => {
+	HoloFuel				= null;
+	Object.assign( store.state, empty_state() );
+	Envoy.signIn();
+    });
 
     async function initializeWsConnection( uid ) {
 	HoloFuel				= await connect( uid );
@@ -141,6 +146,7 @@ async function init( wsURL ) {
     }
 
     return {
+	Envoy,
 	store,
 	initializeWsConnection,
     };

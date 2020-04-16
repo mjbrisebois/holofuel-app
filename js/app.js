@@ -23,7 +23,9 @@ Vue.filter('currency', function (value) {
 
 (async function(global) {
 
-    const { store, initializeWsConnection }	= await state_manager();
+    const { store,
+	    Envoy,
+	    initializeWsConnection }	= await state_manager();
 
     function snapshot( q ) {
 	const html				= document.querySelector(q).outerHTML;
@@ -362,6 +364,9 @@ Vue.filter('currency', function (value) {
 		    type: 'info',
 		    message: "Copied text to clipboard",
 		});
+	    },
+	    signOut: function () {
+		Envoy.signOut();
 	    },
 	}
     }).$mount('#app');
