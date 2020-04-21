@@ -1,0 +1,1 @@
+/home/vagrant/projects/hClient.js/dist/hclient-0.3.0.browser.min.js

@@ -88,3 +88,6 @@ keystore-%.key:
 	echo " $@ -> $$KEYFILE";							\
 	ln -fs $$KEYFILE $@
 
+local-envoy-redeploy:
+	npm run build
+	rsync -va build/ ~/projects/envoy/src/config/.envoy-deps/holofuel-gui/build/
