@@ -1,0 +1,7 @@
+{
+    "dna_interface": {
+        "driver": {
+            "port": 10000
+        }
+    }
+}

@@ -7,7 +7,7 @@ import state_manager				from "./state-manager.js";
 import notify					from "./notify.js";
 import { mapState, mapMutations, mapActions }	from 'vuex'
 
-const DEFAULT_WS_PORT				= 3000;
+const DEFAULT_WS_PORT				= 10000;
 
 Vue.filter('currency', function (value) {
     const amount				= parseFloat( value );
@@ -344,7 +344,7 @@ Vue.filter('currency', function (value) {
     }
     routes.push({
 	path: '/',
-	redirect: '/3000/',
+	redirect: '/10000/',
     });
     console.log( routes );
 
